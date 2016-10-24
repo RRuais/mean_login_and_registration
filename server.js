@@ -10,6 +10,7 @@ port = process.env.PORT || 8000;
 process.env['APPROOT'] = __dirname;
 
 // Integrate body-parser with our App
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(process.env['APPROOT'], './client')));
