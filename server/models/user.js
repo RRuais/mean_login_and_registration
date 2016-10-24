@@ -5,16 +5,16 @@ var bcrypt = require('bcryptjs');
 var UserSchema = new mongoose.Schema({
 	first_name: {
 		type: String,
-		required: true
+		required: [true, "First name is required"]
 	},
 	last_name: {
 		type: String, 
-		required: true
+		required: [true, "Last name is required"]
 	},
 	email: {
 		type: String,
 		unique: true,
-		required: true,
+		required: [true, "Email is required"]
 		// validate: {
 		// 	validator: function( value ){
 		// 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -25,8 +25,8 @@ var UserSchema = new mongoose.Schema({
 	},
 	password: {
 		type: String,
-		required: true,
-		// minlength: 5,
+		required: [true, "Password is required"],
+		minlength: [5, "Password must be at least 5 characters long"],
 		// validate: {
 		// 	validator: function( value ){
 		// 		var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,32}/;
@@ -35,14 +35,14 @@ var UserSchema = new mongoose.Schema({
 		// 	message: "Password must have at least 1 number, uppercase, and special character"
 		// }
 	},
-	birthdate: {
+	birthday: {
 		type: Date,
-		required: true
-	}
+		required: [true, "Birthday is required"]
+	},
 }, {
 	timestamps: {
 		createdAt: 'created_at',
-		updatedAt: 'updated_at'
+		updatedAt: 'updated_at',
 	}
 });
 

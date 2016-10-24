@@ -3,15 +3,53 @@
 <head>
 	<meta charset="utf-8">
 	<title>Login and Registration</title>
+	<link rel="stylesheet" type="text/css" href="assets/style.css">
 	<script src='angular/angular.js' charset='utf-8'></script>
 	<script src='angular-route/angular-route.js' charset='utf-8'></script>
-	<script src='assets/app.js'></script>
+	<script src='assets/app.js' charset='utf-8'></script>
 	<script src='assets/controllers/loginController.js'></script>
+	<script src='assets/controllers/mainController.js'></script>
 	<script src='assets/factories/usersFactory.js'></script>
 </head>
 <body>
-	<h1>Welcome</h1>
-	<div ng-view>
+	<div ng-controller='loginController'>
+	<h1>Welcome {{ user.first_name }}</h1>
+		<h3>Register</h3>
+		<form ng-model="registration" ng-submit="register()">
+			{{errors.first_name.message}}
+			<p><input type="text" ng-model="registration.first_name" placeholder="First Name"></p>
+			{{errors.last_name.message}}
+			<p><input type="text" ng-model="registration.last_name" placeholder="Last Name"></p>
+			{{errors.email.message}}
+   	 		<p><input type="email"  ng-model = "registration.email" placeholder= "Email"></p>
+    		{{errors.password.message}}
+    		<p><input type="password"  ng-model = "registration.password" placeholder= "Password"></p>
+    		<p><input type="password" ng-model = "registration.confirm_password" placeholder= "Confirm Password"></p>
+    		{{errors.birthday.message}}
+    		<p><input type="date" ng-model = "registration.birthday"></p>
+    		<input type="submit" value="Register">
+		</form>
+		<h3>Login</h3>
+		<form ng-model="userLogin" ng-submit="login()">
+			{{errors.login_reg.message}}
+			<p><input type="email" ng-model="userLogin.email" placeholder="Email"></p>
+			<p><input type="password" ng-model="userLogin.password" placeholder="Password"></p>
+			<input type="submit" value="Login">
+		</form>
+
+		<h1>All Users</h1>
+		<table>
+			<tr>
+				<th>Full Name</th>
+				<th>Email</th>
+				<th>Birthday</th>
+			</tr>
+			<tr ng-repeat='user in users'>
+				<td>{{ user.first_name }} {{ user.last_name }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.birthday | date: "MM-dd-yyyy"}}</td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>

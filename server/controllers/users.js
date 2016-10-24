@@ -1,22 +1,12 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-function response_additions(err, data) {
-    if (err) {
-        this.json({
-            error: err
-        });
-    }
-    this.json({
-        data
-    });
-}
-
 function UsersController(){
 	var _this = this;
 
 	this.index = function(req, res){
 		User.find({}, function(err, data){
+			if (err){ console.log(err); }
 			res.json(data);
 		})
 	};
@@ -51,14 +41,12 @@ function UsersController(){
 					name: "Validation error"
 				});
 			} else if (data && data.validPassword(req.body.password)) {
-				res.json({
-					_id: data._id
-				});
+				res.json( data );
 			} else {
 				res.json({
 					errors: {
 						login_reg: {
-							message: "Invalid user name and/or password",
+							message: "Invalid email and/or password",
 							kind: "what didn't work",
 							path: "reference to the schema's name",
 							value: "cause of the initial error"
@@ -73,12 +61,12 @@ function UsersController(){
 		var user = new User(req.body);
 		user.save(function(err, newuser){
 			if (err){
+				console.log(err);
 				res.json(err);
 			}
 			else{
-				res.json({
-					_id: newuser._id
-				});
+				console.log("Success!", newuser);
+				res.json(newuser);
 			}
 		});
 	}
